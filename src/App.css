@@ -46,3 +46,10 @@
   background: none;
   border: none;
 }
+
+.modal-new-attractor {
+  width: 400px;
+  border-radius: 5px;
+  display: block;
+  margin: 50px auto;
+}

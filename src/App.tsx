@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import AlertItem from './components/Alert/AlertItem';
+import Modal from "./components/Modal/Modal";
 
 interface AlertItem {
   id: number;
@@ -14,16 +15,26 @@ function App() {
     { id: 2, type: 'success', message: 'This is a success type alert' },
   ]);
 
+  const [showModal , setShowModal] = useState(false);
+
   const closeAlert = (id: number) => {
     setAlerts(alerts => alerts.filter(alert => alert.id !== id));
   };
 
   return (
-    <div className="App">
+    <>
       {alerts.map(alert => (
         <AlertItem key={alert.id} id={alert.id} type={alert.type} message={alert.message} onDismiss={closeAlert} />
       ))}
-    </div>
+      <button className="w-100 btn btn-primary" onClick={() => setShowModal(true)}>
+        Show Modal
+      </button>
+      <Modal show={showModal} title="Alert Modal" onClose={() => setShowModal(false)}>
+        <div className="modal-body">
+          Content
+        </div>
+      </Modal>
+    </>
   );
 }
 
