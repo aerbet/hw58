@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import AlertItem from './components/Alert/AlertItem';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+interface AlertItem {
+  id: number;
+  type: 'primary' | 'success' | 'danger' | 'warning';
+  message: string;
 }
 
-export default App
+function App() {
+  const [alerts, setAlerts] = useState<AlertItem[]>([
+    { id: 1, type: 'warning', message: 'This is a warning type alert' },
+    { id: 2, type: 'success', message: 'This is a success type alert' },
+  ]);
+
+  const closeAlert = (id: number) => {
+    setAlerts(alerts => alerts.filter(alert => alert.id !== id));
+  };
+
+  return (
+    <div className="App">
+      {alerts.map(alert => (
+        <AlertItem key={alert.id} id={alert.id} type={alert.type} message={alert.message} onDismiss={closeAlert} />
+      ))}
+    </div>
+  );
+}
+
+export default App;
